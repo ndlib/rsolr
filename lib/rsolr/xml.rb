@@ -139,6 +139,8 @@ module RSolr::Xml
           elsif value.is_a?(Hash) && value.length == 1 && field_obj.attrs[:update].nil?
             update_attr, real_value = value.first
             doc_node.field real_value, field_obj.attrs.merge(update: update_attr)
+          elsif value.nil?
+            doc_node.field field_obj.value, field_obj.attrs.merge(null: true)
           else
             doc_node.field field_obj.value, field_obj.attrs
           end

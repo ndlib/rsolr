@@ -90,6 +90,16 @@ RSpec.describe RSolr::Xml do
           expect(result).to match(/<field name="id">1<\/field>/)
         end
 
+        it 'should remove a field from a hash formatted for atomic updates' do
+          data = {
+            :id => 1,
+            :name => nil
+          }
+          result = generator.add(data)
+          expect(result).to match(%r{<field name="name" null="true"/>})
+          expect(result).to match(/<field name="id">1<\/field>/)
+        end
+
         # add an array of hashes
         it 'should create many adds from an array of hashes' do
           data = [
